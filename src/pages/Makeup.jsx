@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import BookingModal from '../components/BookingModal';
 import './Makeup.css';
 
 const MAKEUP_TYPES = [
@@ -72,25 +73,10 @@ export default function Makeup() {
       </div>
 
       {selectedType && (
-        <div
-          className="booking-placeholder-overlay"
-          onClick={() => setSelectedType(null)}
-        >
-          <div
-            className="booking-placeholder"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <p>
-              Booking flow for <strong>{selectedType}</strong> coming next 👀
-            </p>
-            <button
-              className="btn-outline"
-              onClick={() => setSelectedType(null)}
-            >
-              Close
-            </button>
-          </div>
-        </div>
+        <BookingModal
+          makeupType={selectedType}
+          onClose={() => setSelectedType(null)}
+        />
       )}
     </div>
   );
