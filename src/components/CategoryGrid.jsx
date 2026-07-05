@@ -1,24 +1,27 @@
 import { Link } from 'react-router-dom';
 import './CategoryGrid.css';
+import { Link } from 'react-router-dom';
+import './CategoryGrid.css';
+import makeupImg from '../assets/makeup.jpg';
+import geleImg from '../assets/gele.jpg';
+import braidingImg from '../assets/braiding.jpg';
+import ashokeImg from '../assets/ashoke.jpg';
 
 const CATEGORIES = [
   {
     label: 'Makeup',
     path: '/makeup',
-    image:
-      'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?q=80&w=600',
+    image: makeupImg,
   },
   {
     label: 'Gele Styling',
     path: '/services/gele',
-    image:
-      'https://images.unsplash.com/photo-1594744803329-e58b31de8bf5?q=80&w=600',
+    image: geleImg,
   },
   {
     label: 'Braiding',
     path: '/services/braiding',
-    image:
-      'https://images.unsplash.com/photo-1622296089863-eb7fc530daa8?q=80&w=600',
+    image: braidingImg,
   },
   {
     label: 'Nails',
@@ -35,10 +38,10 @@ const CATEGORIES = [
   {
     label: 'Ashoke',
     path: '/shop/ashoke',
-    image:
-      'https://images.unsplash.com/photo-1610030181087-540f6497a374?q=80&w=600',
+    image: ashokeImg,
   },
 ];
+
 
 export default function CategoryGrid() {
   return (
