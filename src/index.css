@@ -1,0 +1,100 @@
+:root {
+  --color-black: #0d0d0d;
+  --color-black-soft: #1a1a1a;
+  --color-gold: #c9a253;
+  --color-gold-light: #e6c878;
+  --color-cream: #f8f3ea;
+  --color-cream-dark: #ede4d3;
+  --color-text-dark: #1a1a1a;
+  --color-text-light: #f8f3ea;
+  --font-heading: 'Playfair Display', Georgia, serif;
+  --font-body: 'Poppins', Arial, sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--color-cream);
+  color: var(--color-text-dark);
+  line-height: 1.6;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul {
+  list-style: none;
+}
+
+button {
+  font-family: var(--font-body);
+  cursor: pointer;
+  border: none;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-heading);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.btn-gold {
+  background-color: var(--color-gold);
+  color: var(--color-black);
+  padding: 12px 28px;
+  border-radius: 30px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  transition: background-color 0.25s ease, transform 0.15s ease;
+  display: inline-block;
+}
+
+.btn-gold:hover {
+  background-color: var(--color-gold-light);
+  transform: translateY(-2px);
+}
+
+.btn-outline {
+  background-color: transparent;
+  color: var(--color-gold);
+  border: 1.5px solid var(--color-gold);
+  padding: 11px 26px;
+  border-radius: 30px;
+  font-weight: 600;
+  transition: all 0.25s ease;
+  display: inline-block;
+}
+
+.btn-outline:hover {
+  background-color: var(--color-gold);
+  color: var(--color-black);
+}
+
+.section {
+  padding: 80px 0;
+}
+
+.section-title {
+  text-align: center;
+  font-size: 2.2rem;
+  color: var(--color-black);
+  margin-bottom: 12px;
+}
+
+.section-subtitle {
+  text-align: center;
+  color: #6b6b6b;
+  margin-bottom: 50px;
+  font-size: 1rem;
+}
