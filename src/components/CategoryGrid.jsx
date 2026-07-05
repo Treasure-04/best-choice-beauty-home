@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
 import './CategoryGrid.css';
-import { Link } from 'react-router-dom';
 import './CategoryGrid.css';
 import makeupImg from '../assets/makeup.jpg';
 import geleImg from '../assets/gele.jpg';
