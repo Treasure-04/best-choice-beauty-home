@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { X, ChevronLeft } from 'lucide-react';
 import './BookingModal.css';
+import emailjs from '@emailjs/browser';
 
 // Rough starting prices in Naira — update these anytime, they're just placeholders for now
 const PRICES = {
@@ -30,17 +31,39 @@ export default function BookingModal({ makeupType, onClose }) {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+  const [sending, setSending] = useState(false);
+  const [sendError, setSendError] = useState('');
+
   const handleSubmit = () => {
-    // Firebase save + email confirmation will be wired in here next
-    console.log('Booking submitted:', {
-      makeupType,
-      location,
-      date,
-      time,
-      ...form,
-      price,
-    });
-    setSubmitted(true);
+    setSending(true);
+    setSendError('');
+
+    const templateParams = {
+      to_name: form.name,
+      to_email: form.email,
+      makeup_type: makeupType,
+      location: location === 'studio' ? 'Studio Session' : 'Home Service',
+      appointment_date: date,
+      appointment_time: time,
+      price: price?.toLocaleString(),
+    };
+
+    emailjs
+      .send(
+        'service_pqcjioc',
+        'template_37q8pvx',
+        templateParams,
+        'ZFAZHC99UzQrRCaJR'
+      )
+      .then(() => {
+        setSending(false);
+        setSubmitted(true);
+      })
+      .catch((error) => {
+        console.error('Email send failed:', error);
+        setSending(false);
+        setSendError('Something went wrong sending your confirmation. Please try again.');
+      });
   };
 
   const canGoNextFromLocation = location !== null;
@@ -180,12 +203,13 @@ export default function BookingModal({ makeupType, onClose }) {
                     placeholder="e.g. chioma@email.com"
                   />
                 </label>
+                {sendError && <p className="booking-error">{sendError}</p>}
                 <button
                   className="btn-gold booking-next"
-                  disabled={!canSubmit}
+                  disabled={!canSubmit || sending}
                   onClick={handleSubmit}
                 >
-                  Confirm Booking
+                  {sending ? 'Sending...' : 'Confirm Booking'}
                 </button>
               </div>
             )}
