@@ -41,10 +41,7 @@ export default function CategoryGrid() {
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.disconnect(); // only trigger once
-        }
+        setIsVisible(entry.isIntersecting);
       },
       { threshold: 0.2 }
     );
@@ -71,7 +68,7 @@ export default function CategoryGrid() {
               className={`category-card from-${cat.direction} ${
                 isVisible ? 'in-view' : ''
               }`}
-              style={{ transitionDelay: `${index * 0.12}s` }}
+              style={{ transitionDelay: `${index * 0.18}s` }}
             >
               <img src={cat.image} alt={cat.label} />
               <div className="category-overlay">
