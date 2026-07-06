@@ -4,7 +4,6 @@ import './CategoryGrid.css';
 import makeupImg from '../assets/makeup.jpg';
 import geleImg from '../assets/gele.jpg';
 import braidingImg from '../assets/braiding.jpg';
-import ashokeImg from '../assets/ashoke.jpg';
 
 const CATEGORIES = [
   {
@@ -27,17 +26,6 @@ const CATEGORIES = [
     path: '/services/nails',
     image:
       'https://images.unsplash.com/photo-1604654894610-df63bc536371?q=80&w=600',
-  },
-  {
-    label: 'Jewelry',
-    path: '/shop/jewelry',
-    image:
-      'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?q=80&w=600',
-  },
-  {
-    label: 'Ashoke',
-    path: '/shop/ashoke',
-    image: ashokeImg,
   },
 ];
 

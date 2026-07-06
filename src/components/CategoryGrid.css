@@ -45,7 +45,7 @@
 
 @media (min-width: 700px) {
   .category-grid {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 24px;
   }
 }

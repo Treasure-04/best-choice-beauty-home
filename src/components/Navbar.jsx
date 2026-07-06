@@ -17,13 +17,6 @@ const NAV_LINKS = [
       { label: 'Nails (Pedicure/Manicure)', path: '/services/nails' },
     ],
   },
-  {
-    label: 'Shop',
-    children: [
-      { label: 'Jewelry', path: '/shop/jewelry' },
-      { label: 'Ashoke', path: '/shop/ashoke' },
-    ],
-  },
   { label: 'About', path: '/about' },
   { label: 'Contact', path: '/contact' },
 ];

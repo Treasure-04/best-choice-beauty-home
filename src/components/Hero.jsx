@@ -6,12 +6,12 @@ export default function Hero() {
     <section className="hero">
       <div className="hero-overlay" />
       <div className="container hero-content">
-        <p className="hero-tagline">Glam. Gele. Glow.</p>
+        <p className="hero-tagline">Glam. Gleam. Glamour.</p>
         <h1 className="hero-title">
           Your One-Stop <span>Beauty</span> Destination
         </h1>
         <p className="hero-subtitle">
-          Makeup, gele styling, braiding, nails, jewelry &amp; ashoke — all
+          Makeup, gele styling, braiding, &amp; nails — all
           under one roof.
         </p>
         <div className="hero-buttons">
