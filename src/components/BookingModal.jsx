@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { X, ChevronLeft } from 'lucide-react';
-import './BookingModal.css';
 import emailjs from '@emailjs/browser';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { db } from '../firebase/config';
+import './BookingModal.css';
 
 // Rough starting prices in Naira — update these anytime, they're just placeholders for now
 const PRICES = {
@@ -12,6 +14,9 @@ const PRICES = {
   'Bold Lip Makeup': { studio: 10000, home: 15000 },
 };
 
+const STUDIO_ADDRESS =
+  'Best Choice Beauty Home Studio, [Insert Full Address], Port Harcourt';
+
 const STEPS = ['location', 'datetime', 'details'];
 
 export default function BookingModal({ makeupType, onClose }) {
@@ -19,8 +24,10 @@ export default function BookingModal({ makeupType, onClose }) {
   const [location, setLocation] = useState(null); // 'studio' | 'home'
   const [date, setDate] = useState('');
   const [time, setTime] = useState('');
-  const [form, setForm] = useState({ name: '', phone: '', email: '' });
+  const [form, setForm] = useState({ name: '', phone: '', email: '', address: '' });
   const [submitted, setSubmitted] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [sendError, setSendError] = useState('');
 
   const price = location ? PRICES[makeupType]?.[location] : null;
 
@@ -31,45 +38,63 @@ export default function BookingModal({ makeupType, onClose }) {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const [sending, setSending] = useState(false);
-  const [sendError, setSendError] = useState('');
-
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     setSending(true);
     setSendError('');
 
-    const templateParams = {
-      to_name: form.name,
-      to_email: form.email,
-      makeup_type: makeupType,
+    const bookingData = {
+      service: 'Makeup',
+      type: makeupType,
       location: location === 'studio' ? 'Studio Session' : 'Home Service',
-      appointment_date: date,
-      appointment_time: time,
-      price: price?.toLocaleString(),
+      address: location === 'home' ? form.address : STUDIO_ADDRESS,
+      date,
+      time,
+      price,
+      name: form.name,
+      phone: form.phone,
+      email: form.email,
+      status: 'pending',
+      createdAt: serverTimestamp(),
     };
 
-    emailjs
-      .send(
+    try {
+      // Save to Firestore first
+      await addDoc(collection(db, 'bookings'), bookingData);
+
+      // Then send confirmation email
+      const templateParams = {
+        to_name: form.name,
+        to_email: form.email,
+        makeup_type: makeupType,
+        location: bookingData.location,
+        appointment_date: date,
+        appointment_time: time,
+        price: price?.toLocaleString(),
+      };
+
+      await emailjs.send(
         'service_pqcjioc',
         'template_37q8pvx',
         templateParams,
         'ZFAZHC99UzQrRCaJR'
-      )
-      .then(() => {
-        setSending(false);
-        setSubmitted(true);
-      })
-      .catch((error) => {
-        console.error('Email send failed:', error);
-        setSending(false);
-        setSendError('Something went wrong sending your confirmation. Please try again.');
-      });
+      );
+
+      setSending(false);
+      setSubmitted(true);
+    } catch (error) {
+      console.error('Booking failed:', error);
+      setSending(false);
+      setSendError('Something went wrong. Please try again.');
+    }
   };
 
   const canGoNextFromLocation = location !== null;
   const canGoNextFromDatetime = date !== '' && time !== '';
   const canSubmit =
-    form.name.trim() !== '' && form.phone.trim() !== '' && form.email.trim() !== '';
+    form.name.trim() !== '' &&
+    form.phone.trim() !== '' &&
+    form.email.trim() !== '' &&
+    (location !== 'home' || form.address.trim() !== '');
 
   return (
     <div className="booking-overlay" onClick={onClose}>
@@ -203,6 +228,25 @@ export default function BookingModal({ makeupType, onClose }) {
                     placeholder="e.g. chioma@email.com"
                   />
                 </label>
+
+                {location === 'home' ? (
+                  <label className="booking-field">
+                    Your Address
+                    <input
+                      type="text"
+                      name="address"
+                      value={form.address}
+                      onChange={handleFormChange}
+                      placeholder="e.g. 12 Aba Road, Port Harcourt"
+                    />
+                  </label>
+                ) : (
+                  <div className="studio-address-box">
+                    <p className="studio-address-label">Studio Location</p>
+                    <p className="studio-address-text">{STUDIO_ADDRESS}</p>
+                  </div>
+                )}
+
                 {sendError && <p className="booking-error">{sendError}</p>}
                 <button
                   className="btn-gold booking-next"

@@ -178,3 +178,25 @@
   object-fit: cover;
   border-radius: 10px;
 }
+
+.studio-address-box {
+  background: var(--color-cream);
+  border: 1.5px solid var(--color-cream-dark);
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin-bottom: 20px;
+}
+
+.studio-address-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--color-gold);
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.studio-address-text {
+  color: var(--color-black);
+  font-size: 0.9rem;
+}
