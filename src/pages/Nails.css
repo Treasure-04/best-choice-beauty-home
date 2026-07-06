@@ -1,0 +1,54 @@
+.nails-page {
+  padding: 60px 0 80px;
+  background-color: var(--color-cream);
+}
+
+.nails-step {
+  margin-bottom: 32px;
+}
+
+.nails-step-label {
+  font-weight: 600;
+  color: var(--color-black);
+  margin-bottom: 14px;
+  font-size: 1rem;
+}
+
+.nails-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.nails-option-card {
+  background: #fff;
+  border: 1.5px solid var(--color-cream-dark);
+  border-radius: 10px;
+  padding: 16px 12px;
+  text-align: center;
+  font-weight: 500;
+  color: var(--color-black);
+  transition: all 0.2s ease;
+}
+
+.nails-option-card.selected {
+  border-color: var(--color-gold);
+  background: #fdf8ef;
+  color: var(--color-gold);
+  font-weight: 700;
+}
+
+.nails-cta {
+  text-align: center;
+  margin-top: 40px;
+  padding: 24px;
+  background: #fff;
+  border-radius: 14px;
+  border: 1px solid var(--color-cream-dark);
+}
+
+.nails-summary {
+  margin-bottom: 16px;
+  color: var(--color-black);
+  font-size: 1.05rem;
+}
