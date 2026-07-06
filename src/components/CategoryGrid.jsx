@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import './CategoryGrid.css';
-import makeupImg from '../assets/makeup.jpg.jpeg';
-import geleImg from '../assets/gele.jpg.jpeg';
-import braidingImg from '../assets/braiding.jpg.jpeg';
+import makeupImg from '../assets/makeup.jpg';
+import geleImg from '../assets/gele.jpg';
+import braidingImg from '../assets/braiding.jpg';
 
 const CATEGORIES = [
   {
