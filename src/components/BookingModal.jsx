@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { X, ChevronLeft } from 'lucide-react';
 import emailjs from '@emailjs/browser';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
-import { db } from '../firebase/config';
+import { db } from '../firebase/firebase/config';
 import './BookingModal.css';
 
 // Rough starting prices in Naira — update these anytime, they're just placeholders for now
