@@ -5,6 +5,8 @@ import Makeup from './pages/Makeup';
 import Nails from './pages/Nails';
 import GeleStyling from './pages/GeleStyling';
 import Braiding from './pages/Braiding';
+import About from './pages/About';
+import Contact from './pages/Contact';
 
 function App() {
   return (
@@ -16,6 +18,8 @@ function App() {
         <Route path="/services/nails" element={<Nails />} />
         <Route path="/services/gele" element={<GeleStyling />} />
         <Route path="/services/braiding" element={<Braiding />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
       </Routes>
     </BrowserRouter>
   );
