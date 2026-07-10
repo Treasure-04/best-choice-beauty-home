@@ -8,12 +8,14 @@ export default function Home() {
 
   useEffect(() => {
     if (location.hash === '#what-we-offer') {
-      // Small delay to let the page fully render first
       setTimeout(() => {
         const el = document.getElementById('what-we-offer');
         if (el) {
           el.scrollIntoView({ behavior: 'smooth' });
         }
+        // Clear the hash from the URL after scrolling so a later refresh
+        // doesn't auto-scroll again
+        window.history.replaceState(null, '', '/');
       }, 100);
     }
   }, [location]);
