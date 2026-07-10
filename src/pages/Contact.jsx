@@ -19,7 +19,7 @@ export default function Contact() {
 
     const templateParams = {
       to_name: 'Best Choice Beauty Home',
-      to_email: 'YOUR_BUSINESS_EMAIL@gmail.com',
+      to_email: 'wosuolunne@gmail.com',
       from_name: form.name,
       from_email: form.email,
       message: form.message,
@@ -60,8 +60,7 @@ export default function Contact() {
             <p className="contact-detail">
               <strong>Studio Address:</strong>
               <br />
-              Best Choice Beauty Home Studio, [Insert Full Address], Port
-              Harcourt
+              Best Choice Beauty Home Studio, No.12 Alimini road Igwurutali, Port Harcourt, Nigeria
             </p>
             <p className="contact-detail">
               <strong>Phone:</strong>
@@ -71,7 +70,7 @@ export default function Contact() {
             <p className="contact-detail">
               <strong>Email:</strong>
               <br />
-              YOUR_BUSINESS_EMAIL@gmail.com
+              wosuolunne@gmail.com
             </p>
 
             

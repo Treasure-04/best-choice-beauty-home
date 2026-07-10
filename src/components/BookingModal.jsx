@@ -15,7 +15,7 @@ const PRICES = {
 };
 
 const STUDIO_ADDRESS =
-  'Best Choice Beauty Home Studio, [Insert Full Address], Port Harcourt';
+ 'Best Choice Beauty Home Studio, No.12 Alimini road Igwurutali, Port Harcourt, Nigeria';
 
 const STEPS = ['location', 'datetime', 'details'];
 
