@@ -21,7 +21,9 @@ html {
   scroll-behavior:smooth;
 }
 
+html,
 body {
+  overflow-x: hidden;
   font-family: var(--font-body);
   background-color: var(--color-cream);
   color: var(--color-text-dark);
