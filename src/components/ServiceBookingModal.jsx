@@ -1,7 +1,11 @@
 import { useState } from 'react';
 import { X, ChevronLeft } from 'lucide-react';
 import emailjs from '@emailjs/browser';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { db } from '../firebase/config';
 import './BookingModal.css';
+const STUDIO_ADDRESS =
+  'Best Choice Beauty Home Studio, No.12 Alimini road Igwurutali, Port Harcourt, Nigeria';
 
 export default function ServiceBookingModal({
   title,
@@ -13,7 +17,7 @@ export default function ServiceBookingModal({
   const [location, setLocation] = useState(null);
   const [date, setDate] = useState('');
   const [time, setTime] = useState('');
-  const [form, setForm] = useState({ name: '', phone: '', email: '' });
+  const [form, setForm] = useState({ name: '', phone: '', email: '', address: '' });
   const [submitted, setSubmitted] = useState(false);
   const [sending, setSending] = useState(false);
   const [sendError, setSendError] = useState('');
@@ -27,44 +31,61 @@ export default function ServiceBookingModal({
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     setSending(true);
     setSendError('');
 
-    const templateParams = {
-      to_name: form.name,
-      to_email: form.email,
-      makeup_type: title,
+    const bookingData = {
+      service: 'Nails',
+      type: title,
       location: location === 'studio' ? 'Studio Session' : 'Home Service',
-      appointment_date: date,
-      appointment_time: time,
-      price: price?.toLocaleString(),
+      address: location === 'home' ? form.address : STUDIO_ADDRESS,
+      date,
+      time,
+      price,
+      name: form.name,
+      phone: form.phone,
+      email: form.email,
+      status: 'pending',
+      createdAt: serverTimestamp(),
     };
 
-    emailjs
-      .send(
+    try {
+      await addDoc(collection(db, 'bookings'), bookingData);
+
+      const templateParams = {
+        to_name: form.name,
+        to_email: form.email,
+        makeup_type: title,
+        location: bookingData.location,
+        appointment_date: date,
+        appointment_time: time,
+        price: price?.toLocaleString(),
+      };
+
+      await emailjs.send(
         'service_pqcjioc',
         'template_37q8pvx',
         templateParams,
         'ZFAZHC99UzQrRCaJR'
-      )
-      .then(() => {
-        setSending(false);
-        setSubmitted(true);
-      })
-      .catch((error) => {
-        console.error('Email send failed:', error);
-        setSending(false);
-        setSendError(
-          'Something went wrong sending your confirmation. Please try again.'
-        );
-      });
+      );
+
+      setSending(false);
+      setSubmitted(true);
+    } catch (error) {
+      console.error('Booking failed:', error);
+      setSending(false);
+      setSendError('Something went wrong. Please try again.');
+    }
   };
 
   const canGoNextFromLocation = location !== null;
   const canGoNextFromDatetime = date !== '' && time !== '';
   const canSubmit =
-    form.name.trim() !== '' && form.phone.trim() !== '' && form.email.trim() !== '';
+    form.name.trim() !== '' &&
+    form.phone.trim() !== '' &&
+    form.email.trim() !== '' &&
+    (location !== 'home' || form.address.trim() !== '');
 
   return (
     <div className="booking-overlay" onClick={onClose}>
@@ -188,7 +209,7 @@ export default function ServiceBookingModal({
                     placeholder="e.g. 08012345678"
                   />
                 </label>
-                <label className="booking-field">
+              <label className="booking-field">
                   Email
                   <input
                     type="email"
@@ -198,6 +219,25 @@ export default function ServiceBookingModal({
                     placeholder="e.g. chioma@email.com"
                   />
                 </label>
+
+                {location === 'home' ? (
+                  <label className="booking-field">
+                    Your Address
+                    <input
+                      type="text"
+                      name="address"
+                      value={form.address}
+                      onChange={handleFormChange}
+                      placeholder="e.g. 12 Aba Road, Port Harcourt"
+                    />
+                  </label>
+                ) : (
+                  <div className="studio-address-box">
+                    <p className="studio-address-label">Studio Location</p>
+                    <p className="studio-address-text">{STUDIO_ADDRESS}</p>
+                  </div>
+                )}
+
                 {sendError && <p className="booking-error">{sendError}</p>}
                 <button
                   className="btn-gold booking-next"
