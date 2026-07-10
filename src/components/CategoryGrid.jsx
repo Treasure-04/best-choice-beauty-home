@@ -54,7 +54,7 @@ export default function CategoryGrid() {
   }, []);
 
   return (
-    <section className="section" ref={sectionRef}>
+    <section className="section" id="what-we-offer" ref={sectionRef}>
       <div className="container">
         <h2 className="section-title">What We Offer</h2>
         <p className="section-subtitle">

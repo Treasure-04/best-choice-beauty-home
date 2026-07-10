@@ -15,10 +15,9 @@ export default function Hero() {
           under one roof.
         </p>
         <div className="hero-buttons">
-          <Link to="/makeup" className="btn-gold">
+          <a href="#what-we-offer" className="btn-gold">
             Explore Services
-          </Link>
-          
+          </a>
             <a href="https://wa.me/2348032772872"
             target="_blank"
             rel="noreferrer"
