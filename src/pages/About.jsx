@@ -28,10 +28,10 @@ export default function About() {
             you'll love every single time.
           </p>
 
-          <div className="about-cta">
-            <Link to="/makeup" className="btn-gold">
+<div className="about-cta">
+            <a href="/#what-we-offer" className="btn-gold">
               Explore Our Services
-            </Link>
+            </a>
           </div>
         </div>
       </div>
