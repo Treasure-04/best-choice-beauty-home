@@ -29,9 +29,9 @@ export default function About() {
           </p>
 
 <div className="about-cta">
-            <a href="/#what-we-offer" className="btn-gold">
+            <Link to="/#what-we-offer" className="btn-gold">
               Explore Our Services
-            </a>
+            </Link>
           </div>
         </div>
       </div>
