@@ -3,6 +3,7 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../firebase/config';
 import './ClientAuth.css';
+import { sendPasswordResetEmail } from 'firebase/auth';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -11,6 +12,8 @@ export default function Login() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+  const [resetMessage, setResetMessage] = useState('');
+  const [resetSending, setResetSending] = useState(false);
 
   const from = location.state?.from?.pathname || '/';
 
@@ -18,6 +21,27 @@ export default function Login() {
     e.preventDefault();
     setError('');
     setLoading(true);
+
+    const handleForgotPassword = async () => {
+    if (!email) {
+      setError('Please enter your email above first, then tap "Forgot Password."');
+      return;
+    }
+
+    setResetSending(true);
+    setResetMessage('');
+    setError('');
+
+    try {
+      await sendPasswordResetEmail(auth, email);
+      setResetMessage('Password reset link sent! Check your email inbox.');
+    } catch (err) {
+      console.error(err);
+      setError('Could not send reset email. Please check the address and try again.');
+    } finally {
+      setResetSending(false);
+    }
+  };
 
     try {
       await signInWithEmailAndPassword(auth, email, password);
@@ -55,9 +79,19 @@ export default function Login() {
         </label>
 
         {error && <p className="booking-error">{error}</p>}
+        {resetMessage && <p className="client-auth-success">{resetMessage}</p>}
 
         <button className="btn-gold" type="submit" disabled={loading}>
           {loading ? 'Logging in...' : 'Log In'}
+        </button>
+
+        <button
+          type="button"
+          className="client-auth-forgot-btn"
+          onClick={handleForgotPassword}
+          disabled={resetSending}
+        >
+          {resetSending ? 'Sending...' : 'Forgot Password?'}
         </button>
 
         <p className="client-auth-switch">
