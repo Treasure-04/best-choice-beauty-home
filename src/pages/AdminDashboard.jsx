@@ -6,7 +6,6 @@ import { useNavigate } from 'react-router-dom';
 import { LogOut, Trash2 } from 'lucide-react';
 import './AdminDashboard.css';
 import { updateDoc } from 'firebase/firestore';
-import { collection, onSnapshot, deleteDoc, updateDoc, doc, orderBy, query } from 'firebase/firestore';
 
 export default function AdminDashboard() {
   const [bookings, setBookings] = useState([]);
