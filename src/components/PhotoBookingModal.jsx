@@ -111,9 +111,13 @@ export default function PhotoBookingModal({
               Thanks for booking <strong>{serviceName}</strong> for{' '}
               <strong>{date}</strong> at <strong>{time}</strong>.
             </p>
-            <p>
+           <p>
               A confirmation email is on its way. Tap below to send your
               reference photo on WhatsApp so we can confirm your final price.
+            </p>
+            <p className="booking-spam-note">
+              📧 Didn't get the confirmation email? Please check your spam or
+              junk folder.
             </p>
             <button className="btn-gold" onClick={handleWhatsappRedirect}>
               Continue to WhatsApp

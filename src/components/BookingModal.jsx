@@ -113,9 +113,13 @@ export default function BookingModal({ makeupType, onClose }) {
               Thanks for booking <strong>{makeupType}</strong>
               {location ? ` (${location === 'studio' ? 'Studio' : 'Home Service'})` : ''}.
             </p>
-            <p>
+           <p>
               We'll reach out shortly to confirm your appointment on{' '}
               <strong>{date}</strong> at <strong>{time}</strong>.
+            </p>
+            <p className="booking-spam-note">
+              📧 Didn't get the confirmation email? Please check your spam or
+              junk folder.
             </p>
             <button className="btn-gold" onClick={onClose}>
               Done

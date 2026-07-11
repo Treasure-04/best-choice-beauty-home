@@ -200,3 +200,12 @@
   color: var(--color-black);
   font-size: 0.9rem;
 }
+
+.booking-spam-note {
+  font-size: 0.8rem;
+  color: #888;
+  background: var(--color-cream);
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin-bottom: 16px;
+}
