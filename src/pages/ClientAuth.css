@@ -47,3 +47,18 @@
   color: var(--color-gold);
   font-weight: 600;
 }
+
+.client-auth-admin-link {
+  text-align: center;
+  margin-top: 12px;
+  font-size: 0.8rem;
+}
+
+.client-auth-admin-link a {
+  color: #999;
+  text-decoration: underline;
+}
+
+.client-auth-admin-link a:hover {
+  color: var(--color-gold);
+}

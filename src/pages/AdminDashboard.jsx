@@ -5,6 +5,8 @@ import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { LogOut, Trash2 } from 'lucide-react';
 import './AdminDashboard.css';
+import { updateDoc } from 'firebase/firestore';
+import { collection, onSnapshot, deleteDoc, updateDoc, doc, orderBy, query } from 'firebase/firestore';
 
 export default function AdminDashboard() {
   const [bookings, setBookings] = useState([]);
@@ -30,6 +32,15 @@ export default function AdminDashboard() {
   const handleDelete = async (id) => {
     const confirmed = window.confirm('Delete this booking permanently?');
     if (!confirmed) return;
+
+    const handleStatusChange = async (id, newStatus) => {
+    try {
+      await updateDoc(doc(db, 'bookings', id), { status: newStatus });
+    } catch (error) {
+      console.error('Status update failed:', error);
+      alert('Failed to update status. Please try again.');
+    }
+  };
 
     try {
       await deleteDoc(doc(db, 'bookings', id));
@@ -91,6 +102,17 @@ export default function AdminDashboard() {
                   <Trash2 size={18} />
                 </button>
               </div>
+
+              <select
+                className={`admin-status-select status-${booking.status}`}
+                value={booking.status}
+                onChange={(e) => handleStatusChange(booking.id, e.target.value)}
+              >
+                <option value="pending">Pending</option>
+                <option value="confirmed">Confirmed</option>
+                <option value="completed">Completed</option>
+                <option value="cancelled">Cancelled</option>
+              </select>
 
               <p className="admin-booking-type">{booking.type}</p>
 

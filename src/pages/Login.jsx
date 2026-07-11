@@ -63,6 +63,10 @@ export default function Login() {
         <p className="client-auth-switch">
           Don't have an account? <Link to="/signup">Sign Up</Link>
         </p>
+
+        <p className="client-auth-admin-link">
+          <Link to="/admin/login">Login as Admin</Link>
+        </p>
       </form>
     </div>
   );

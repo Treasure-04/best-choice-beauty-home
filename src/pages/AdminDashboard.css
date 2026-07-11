@@ -123,3 +123,33 @@
 .admin-booking-details strong {
   color: var(--color-black);
 }
+
+.admin-status-select {
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  border: none;
+  margin-bottom: 12px;
+  cursor: pointer;
+}
+
+.admin-status-select.status-pending {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.admin-status-select.status-confirmed {
+  background: #d4edda;
+  color: #155724;
+}
+
+.admin-status-select.status-completed {
+  background: #d1ecf1;
+  color: #0c5460;
+}
+
+.admin-status-select.status-cancelled {
+  background: #f8d7da;
+  color: #721c24;
+}
