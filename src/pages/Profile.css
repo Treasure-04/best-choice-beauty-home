@@ -1,0 +1,113 @@
+.profile-page {
+  padding: 60px 0 80px;
+  background-color: var(--color-cream);
+  min-height: 70vh;
+}
+
+.profile-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 32px;
+  gap: 12px;
+}
+
+.profile-header h1 {
+  color: var(--color-black);
+  font-size: 1.6rem;
+}
+
+.profile-header p {
+  color: #777;
+  font-size: 0.9rem;
+  margin-top: 4px;
+}
+
+.profile-logout-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--color-black);
+  color: var(--color-cream);
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.profile-loading,
+.profile-empty {
+  text-align: center;
+  color: #888;
+  padding: 60px 20px;
+  max-width: 400px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.profile-bookings-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.profile-booking-card {
+  background: #fff;
+  border: 1px solid var(--color-cream-dark);
+  border-radius: 14px;
+  padding: 20px;
+}
+
+.profile-booking-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.profile-booking-service {
+  background: var(--color-black);
+  color: var(--color-gold);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 4px 10px;
+  border-radius: 20px;
+}
+
+.profile-booking-status {
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: capitalize;
+  padding: 4px 10px;
+  border-radius: 20px;
+}
+
+.status-pending {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.status-confirmed {
+  background: #d4edda;
+  color: #155724;
+}
+
+.profile-booking-type {
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  color: var(--color-black);
+  margin-bottom: 12px;
+}
+
+.profile-booking-details p {
+  font-size: 0.9rem;
+  color: #4a4a4a;
+  margin-bottom: 6px;
+}
+
+.profile-booking-details strong {
+  color: var(--color-black);
+}

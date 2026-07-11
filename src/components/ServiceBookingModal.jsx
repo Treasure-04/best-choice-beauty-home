@@ -4,6 +4,8 @@ import emailjs from '@emailjs/browser';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { db } from '../firebase/config';
 import './BookingModal.css';
+import { useAuth } from '../context/AuthContext';
+
 const STUDIO_ADDRESS =
   'Best Choice Beauty Home Studio, No.12 Alimini road Igwurutali, Port Harcourt, Nigeria';
 
@@ -15,6 +17,7 @@ export default function ServiceBookingModal({
 }) {
   const [step, setStep] = useState(0);
   const [location, setLocation] = useState(null);
+  const { user } = useAuth();
   const [date, setDate] = useState('');
   const [time, setTime] = useState('');
   const [form, setForm] = useState({ name: '', phone: '', email: '', address: '' });
@@ -36,6 +39,7 @@ export default function ServiceBookingModal({
     setSendError('');
 
     const bookingData = {
+      userId: user?.uid || null,
       service: 'Nails',
       type: title,
       location: location === 'studio' ? 'Studio Session' : 'Home Service',

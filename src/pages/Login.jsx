@@ -1,0 +1,69 @@
+import { useState } from 'react';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../firebase/config';
+import './ClientAuth.css';
+
+export default function Login() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const from = location.state?.from?.pathname || '/';
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError('');
+    setLoading(true);
+
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      navigate(from, { replace: true });
+    } catch (err) {
+      console.error(err);
+      setError('Invalid email or password.');
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="client-auth-page">
+      <form className="client-auth-form" onSubmit={handleSubmit}>
+        <h1>Welcome Back</h1>
+        <p className="client-auth-subtitle">Log in to book and manage your appointments</p>
+
+        <label className="booking-field">
+          Email
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+        </label>
+        <label className="booking-field">
+          Password
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+        </label>
+
+        {error && <p className="booking-error">{error}</p>}
+
+        <button className="btn-gold" type="submit" disabled={loading}>
+          {loading ? 'Logging in...' : 'Log In'}
+        </button>
+
+        <p className="client-auth-switch">
+          Don't have an account? <Link to="/signup">Sign Up</Link>
+        </p>
+      </form>
+    </div>
+  );
+}

@@ -4,6 +4,7 @@ import emailjs from '@emailjs/browser';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { db } from '../firebase/config';
 import './BookingModal.css';
+import { useAuth } from '../context/AuthContext';
 
 // Rough starting prices in Naira — update these anytime, they're just placeholders for now
 const PRICES = {
@@ -21,6 +22,7 @@ const STEPS = ['location', 'datetime', 'details'];
 
 export default function BookingModal({ makeupType, onClose }) {
   const [step, setStep] = useState(0);
+  const { user } = useAuth();
   const [location, setLocation] = useState(null); // 'studio' | 'home'
   const [date, setDate] = useState('');
   const [time, setTime] = useState('');
@@ -43,6 +45,7 @@ export default function BookingModal({ makeupType, onClose }) {
     setSendError('');
 
     const bookingData = {
+      userId: user?.uid || null,
       service: 'Makeup',
       type: makeupType,
       location: location === 'studio' ? 'Studio Session' : 'Home Service',

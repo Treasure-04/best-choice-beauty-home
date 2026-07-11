@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Menu, X, ChevronDown } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
 import './Navbar.css';
 
 const NAV_LINKS = [
@@ -24,6 +25,7 @@ const NAV_LINKS = [
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [openSubmenu, setOpenSubmenu] = useState(null);
+  const { user } = useAuth();
 
   const toggleMenu = () => setIsOpen(!isOpen);
   const closeMenu = () => {
@@ -33,6 +35,12 @@ export default function Navbar() {
   const toggleSubmenu = (label) => {
     setOpenSubmenu(openSubmenu === label ? null : label);
   };
+
+  const authLink = user
+    ? { label: 'My Profile', path: '/profile' }
+    : { label: 'Login / Sign Up', path: '/login' };
+
+  const allLinks = [...NAV_LINKS, authLink];
 
   return (
     <header className="navbar">
@@ -47,7 +55,7 @@ export default function Navbar() {
 
         <nav className={`navbar-menu ${isOpen ? 'open' : ''}`}>
           <ul>
-            {NAV_LINKS.map((link) => (
+            {allLinks.map((link) => (
               <li key={link.label} className={link.children ? 'has-children' : ''}>
                 {link.children ? (
                   <>

@@ -2,6 +2,9 @@ import { useState } from 'react';
 import { X, ChevronLeft, Upload } from 'lucide-react';
 import emailjs from '@emailjs/browser';
 import './BookingModal.css';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { db } from '../firebase/config';
+import { useAuth } from '../context/AuthContext';
 
 export default function PhotoBookingModal({
   serviceName,
@@ -10,6 +13,7 @@ export default function PhotoBookingModal({
 }) {
   const [step, setStep] = useState(0);
   const [photo, setPhoto] = useState(null);
+  const { user } = useAuth();
   const [photoPreview, setPhotoPreview] = useState(null);
   const [date, setDate] = useState('');
   const [time, setTime] = useState('');
@@ -33,38 +37,52 @@ export default function PhotoBookingModal({
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     setSending(true);
     setSendError('');
 
-    const templateParams = {
-      to_name: form.name,
-      to_email: form.email,
-      makeup_type: serviceName,
+    const bookingData = {
+      userId: user?.uid || null,
+      service: serviceName,
+      type: `${serviceName} (style to be confirmed via photo)`,
       location: 'To be discussed on WhatsApp',
-      appointment_date: date,
-      appointment_time: time,
-      price: 'To be confirmed based on style',
+      date,
+      time,
+      price: null,
+      name: form.name,
+      phone: form.phone,
+      email: form.email,
+      status: 'pending',
+      createdAt: serverTimestamp(),
     };
 
-    emailjs
-      .send(
+    try {
+      await addDoc(collection(db, 'bookings'), bookingData);
+
+      const templateParams = {
+        to_name: form.name,
+        to_email: form.email,
+        makeup_type: serviceName,
+        location: 'To be discussed on WhatsApp',
+        appointment_date: date,
+        appointment_time: time,
+        price: 'To be confirmed based on style',
+      };
+
+      await emailjs.send(
         'service_pqcjioc',
         'template_37q8pvx',
         templateParams,
         'ZFAZHC99UzQrRCaJR'
-      )
-      .then(() => {
-        setSending(false);
-        setSubmitted(true);
-      })
-      .catch((error) => {
-        console.error('Email send failed:', error);
-        setSending(false);
-        setSendError(
-          'Something went wrong sending your confirmation. Please try again.'
-        );
-      });
+      );
+
+      setSending(false);
+      setSubmitted(true);
+    } catch (error) {
+      console.error('Booking failed:', error);
+      setSending(false);
+      setSendError('Something went wrong. Please try again.');
+    }
   };
 
   const handleWhatsappRedirect = () => {
