@@ -1,19 +1,18 @@
 import { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import { signInWithEmailAndPassword, sendPasswordResetEmail } from 'firebase/auth';
 import { auth } from '../firebase/config';
 import './ClientAuth.css';
-import { sendPasswordResetEmail } from 'firebase/auth';
 
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
-  const location = useLocation();
   const [resetMessage, setResetMessage] = useState('');
   const [resetSending, setResetSending] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const from = location.state?.from?.pathname || '/';
 
@@ -22,7 +21,17 @@ export default function Login() {
     setError('');
     setLoading(true);
 
-    const handleForgotPassword = async () => {
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      navigate(from, { replace: true });
+    } catch (err) {
+      console.error(err);
+      setError('Invalid email or password.');
+      setLoading(false);
+    }
+  };
+
+  const handleForgotPassword = async () => {
     if (!email) {
       setError('Please enter your email above first, then tap "Forgot Password."');
       return;
@@ -40,16 +49,6 @@ export default function Login() {
       setError('Could not send reset email. Please check the address and try again.');
     } finally {
       setResetSending(false);
-    }
-  };
-
-    try {
-      await signInWithEmailAndPassword(auth, email, password);
-      navigate(from, { replace: true });
-    } catch (err) {
-      console.error(err);
-      setError('Invalid email or password.');
-      setLoading(false);
     }
   };
 
