@@ -1,11 +1,10 @@
 import { useEffect, useState } from 'react';
-import { collection, onSnapshot, deleteDoc, doc, orderBy, query } from 'firebase/firestore';
+import { collection, onSnapshot, deleteDoc, updateDoc, doc, orderBy, query } from 'firebase/firestore';
 import { db } from '../firebase/config';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { LogOut, Trash2 } from 'lucide-react';
 import './AdminDashboard.css';
-import { updateDoc } from 'firebase/firestore';
 
 export default function AdminDashboard() {
   const [bookings, setBookings] = useState([]);
@@ -32,20 +31,20 @@ export default function AdminDashboard() {
     const confirmed = window.confirm('Delete this booking permanently?');
     if (!confirmed) return;
 
-    const handleStatusChange = async (id, newStatus) => {
-    try {
-      await updateDoc(doc(db, 'bookings', id), { status: newStatus });
-    } catch (error) {
-      console.error('Status update failed:', error);
-      alert('Failed to update status. Please try again.');
-    }
-  };
-
     try {
       await deleteDoc(doc(db, 'bookings', id));
     } catch (error) {
       console.error('Delete failed:', error);
       alert('Failed to delete booking. Please try again.');
+    }
+  };
+
+  const handleStatusChange = async (id, newStatus) => {
+    try {
+      await updateDoc(doc(db, 'bookings', id), { status: newStatus });
+    } catch (error) {
+      console.error('Status update failed:', error);
+      alert('Failed to update status. Please try again.');
     }
   };
 
