@@ -1,0 +1,125 @@
+.admin-dashboard {
+  padding: 40px 20px 80px;
+  max-width: 900px;
+  margin: 0 auto;
+  background-color: var(--color-cream);
+  min-height: 80vh;
+}
+
+.admin-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 24px;
+  gap: 12px;
+}
+
+.admin-header h1 {
+  color: var(--color-black);
+  font-size: 1.6rem;
+}
+
+.admin-header p {
+  color: #777;
+  font-size: 0.9rem;
+  margin-top: 4px;
+}
+
+.admin-logout-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--color-black);
+  color: var(--color-cream);
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.admin-filters {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+}
+
+.admin-filter-btn {
+  background: #fff;
+  border: 1.5px solid var(--color-cream-dark);
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  color: #555;
+  font-weight: 500;
+}
+
+.admin-filter-btn.active {
+  background: var(--color-gold);
+  border-color: var(--color-gold);
+  color: var(--color-black);
+  font-weight: 700;
+}
+
+.admin-loading,
+.admin-empty {
+  text-align: center;
+  color: #888;
+  padding: 60px 0;
+}
+
+.admin-bookings-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.admin-booking-card {
+  background: #fff;
+  border: 1px solid var(--color-cream-dark);
+  border-radius: 14px;
+  padding: 20px;
+}
+
+.admin-booking-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.admin-booking-service {
+  background: var(--color-black);
+  color: var(--color-gold);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 4px 10px;
+  border-radius: 20px;
+}
+
+.admin-delete-btn {
+  background: transparent;
+  color: #c0392b;
+  padding: 4px;
+}
+
+.admin-booking-type {
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  color: var(--color-black);
+  margin-bottom: 12px;
+}
+
+.admin-booking-details p {
+  font-size: 0.9rem;
+  color: #4a4a4a;
+  margin-bottom: 6px;
+  line-height: 1.4;
+}
+
+.admin-booking-details strong {
+  color: var(--color-black);
+}

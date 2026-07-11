@@ -1,4 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { AuthProvider } from './context/AuthContext';
+import ProtectedRoute from './components/ProtectedRoute';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Home from './pages/Home';
@@ -8,21 +10,34 @@ import GeleStyling from './pages/GeleStyling';
 import Braiding from './pages/Braiding';
 import About from './pages/About';
 import Contact from './pages/Contact';
+import AdminLogin from './pages/AdminLogin';
+import AdminDashboard from './pages/AdminDashboard';
 
 function App() {
   return (
     <BrowserRouter>
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/makeup" element={<Makeup />} />
-        <Route path="/services/nails" element={<Nails />} />
-        <Route path="/services/gele" element={<GeleStyling />} />
-        <Route path="/services/braiding" element={<Braiding />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact />} />
-      </Routes>
-      <Footer />
+      <AuthProvider>
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/makeup" element={<Makeup />} />
+          <Route path="/services/nails" element={<Nails />} />
+          <Route path="/services/gele" element={<GeleStyling />} />
+          <Route path="/services/braiding" element={<Braiding />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/admin/login" element={<AdminLogin />} />
+          <Route
+            path="/admin/dashboard"
+            element={
+              <ProtectedRoute>
+                <AdminDashboard />
+              </ProtectedRoute>
+            }
+          />
+        </Routes>
+        <Footer />
+      </AuthProvider>
     </BrowserRouter>
   );
 }
